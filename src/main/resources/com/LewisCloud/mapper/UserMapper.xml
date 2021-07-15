@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.LewisCloud.mapper.UserMapper">
+    
+    <resultMap id="userMap" type="com.LewisCloud.pojo.User">
+        <result property="emailAddress" column="email_address" javaType="string"/>
+        <result property="phoneNumber" column="phone_number" javaType="string"/>
+    </resultMap>
+
+<!--    select-->
+    <select id="getUser" resultMap="userMap">
+        select user.id, user.username, user.identity, user.email_address, user.phone_number
+        from user join localauth on (user.id = localauth.user_id)
+        where username=#{username} and password=#{password}
+    </select>
+
+    <select id="getUserByName" resultType="com.LewisCloud.pojo.User">
+        select *
+        from user
+        where username=#{username};
+    </select>
+
+    <select id="getUserById" resultType="com.LewisCloud.pojo.User">
+        select *
+        from user
+        where id=#{id};
+    </select>
+
+<!--    insert-->
+    <insert id="setUser" parameterType="com.LewisCloud.common.core.domain.model.RegisterUser" useGeneratedKeys="true" keyProperty="id">
+        insert into user(username,identity,email_address,phone_number) values(#{registerUser.username},#{registerUser.identity},#{registerUser.emailAddress},#{registerUser.phoneNumber})
+    </insert>
+    <insert id="setLocalAuth" parameterType="com.LewisCloud.common.core.domain.model.RegisterUser">
+        insert into localauth(user_id,password) values(#{registerUser.id}, #{registerUser.password})
+    </insert>
+
+
+
+<!--    delete-->
+    <delete id="deleteUser">
+        delete from user where id=#{id}
+    </delete>
+
+<!--    update-->
+
+
+
+</mapper>
