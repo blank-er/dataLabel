@@ -1,6 +1,5 @@
 package com.LewisCloud.common.core.domain.model;
 
-import com.LewisCloud.pojo.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

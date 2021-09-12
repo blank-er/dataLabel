@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.LewisCloud.mapper.ProjectMapper">
+
+    <resultMap id="projectMap" type="com.LewisCloud.pojo.Project">
+        <result property="workerMaxNum" column="worker_max_num" javaType="int"/>
+        <result property="photosPath" column="photos_path" javaType="string"/>
+        <result property="cocoPath" column="coco_path" javaType="string"/>
+        
+        <association property="manager" column="manager_id" javaType="com.LewisCloud.pojo.User" select="getManager">
+            <id property="id" column="manager_id"/>
+            <result property="emailAddress" column="email_address"/>
+            <result property="phoneNumber" column="phone_number"/>
+        </association>
+
+        <collection property="worker" column="worker_id" ofType="com.LewisCloud.pojo.User" select="getWorker">
+            <id property="id" column="worker_id"/>
+            <result property="emailAddress" column="email_address"/>
+            <result property="phoneNumber" column="phone_number"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="getManager" resultType="com.LewisCloud.pojo.User">
+        select *
+        from user
+        where id = #{manager_id}
+    </select>
+
+    <select id="getWorker" resultType="com.LewisCloud.pojo.User">
+        select *
+        from user
+        where id = #{worker_id}
+    </select>
+
+    <select id="getAllProject" resultMap="projectMap">
+        select id, state, introduction, worker_max_num
+        from project
+    </select>
+
+<!--    <select id="getProjectById" resultType="projectMap">-->
+<!--        select id, manager, -->
+<!--        from (project p join worker_project w on p.id = w.project_id) join user u on p.manager_id = u.id-->
+<!--        where p.id = #{id}-->
+<!--    </select>-->
+
+    <select id="getProjectById" resultMap="projectMap">
+        select *
+        from project join worker_project on project.id = worker_project.project_id
+        where id = #{project_id}
+    </select>
+
+<!--    insert-->
+    <insert id="addProject" parameterType="com.LewisCloud.pojo.Project" useGeneratedKeys="true" keyProperty="id">
+        insert into project(manager_id, state, title, introduction, worker_max_num, photos_path, coco_path)
+        values (#{project.manager.id}, #{project.state}, #{project.title}, #{project.introduction},
+               #{project.workerMaxNum}, #{project.photosPath}, #{project.cocoPath})
+    </insert>
+
+</mapper>

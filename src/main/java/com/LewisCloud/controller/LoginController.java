@@ -5,14 +5,12 @@ import com.LewisCloud.common.core.domain.AjaxResult;
 import com.LewisCloud.common.core.domain.model.LoginBody;
 import com.LewisCloud.common.core.domain.model.RegisterUser;
 import com.LewisCloud.common.exception.BaseException;
-import com.LewisCloud.pojo.User;
 import com.LewisCloud.service.auth.LoginService;
-import com.LewisCloud.service.auth.UserService;
+import com.LewisCloud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 @RestController
 public class LoginController {

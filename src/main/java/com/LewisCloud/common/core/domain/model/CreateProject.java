@@ -1,22 +1,15 @@
-package com.LewisCloud.pojo;
+package com.LewisCloud.common.core.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
+//新建项目映射视图
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Project {
-    int id;
-    User manager;
-    List<User> worker;
-    String state;
+public class CreateProject {
     String title;
     String introduction;
     int workerMaxNum;
-    String photosPath;
-    String cocoPath;
 }

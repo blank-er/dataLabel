@@ -1,6 +1,7 @@
 package com.LewisCloud.service.auth;
 import com.LewisCloud.common.exception.UserException;
 import com.LewisCloud.pojo.User;
+import com.LewisCloud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

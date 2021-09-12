@@ -1,8 +1,11 @@
 package com.LewisCloud.interceptor;
 
-
+import com.LewisCloud.common.UserThreadLocal;
 import com.LewisCloud.common.constant.Constants;
+import com.LewisCloud.common.exception.BaseException;
 import com.LewisCloud.common.exception.UserException;
+import com.LewisCloud.common.utils.ServletUtils;
+import com.LewisCloud.pojo.User;
 import com.LewisCloud.service.auth.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
@@ -31,12 +34,15 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         // 验证token
         tokenService.verify(request);
 
-        Authenticator authenticator = new BaseAuthenticator();
-        authenticator.authenticate(token);
-
+        // 确认用户
+        try {
+            User user = tokenService.getLoginUser(request);
+            UserThreadLocal.set(user);
+        }catch (Exception e) {
+            throw new BaseException("token", Constants.FAIL, null, "token验证失败");
+        }
         return true;
     }
-
 
     public void postHandle(HttpServletRequest request,
                            HttpServletResponse response,

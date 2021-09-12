@@ -30,11 +30,13 @@
     </select>
 
 <!--    insert-->
-    <insert id="setUser" parameterType="com.LewisCloud.common.core.domain.model.RegisterUser" useGeneratedKeys="true" keyProperty="id">
-        insert into user(username,identity,email_address,phone_number) values(#{registerUser.username},#{registerUser.identity},#{registerUser.emailAddress},#{registerUser.phoneNumber})
+    <insert id="addUser" parameterType="com.LewisCloud.common.core.domain.model.RegisterUser" useGeneratedKeys="true" keyProperty="id">
+        insert into user(username,identity,email_address,phone_number)
+        values(#{registerUser.username},#{registerUser.identity},#{registerUser.emailAddress},#{registerUser.phoneNumber})
     </insert>
-    <insert id="setLocalAuth" parameterType="com.LewisCloud.common.core.domain.model.RegisterUser">
-        insert into localauth(user_id,password) values(#{registerUser.id}, #{registerUser.password})
+    <insert id="addLocalAuth" parameterType="com.LewisCloud.common.core.domain.model.RegisterUser">
+        insert into localauth(user_id,password)
+        values(#{registerUser.id}, #{registerUser.password})
     </insert>
 
 

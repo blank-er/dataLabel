@@ -3,6 +3,7 @@ package com.LewisCloud.service.auth;
 import com.LewisCloud.common.constant.Constants;
 import com.LewisCloud.common.exception.BaseException;
 import com.LewisCloud.pojo.User;
+import com.LewisCloud.service.UserService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -26,7 +27,6 @@ public class TokenService {
     @Value("${token.expireTime}")
     private int expireTime;
 
-
     @Autowired
     private UserService userService;
 
@@ -38,7 +38,6 @@ public class TokenService {
         }catch (Exception e) {
             throw new BaseException("token", Constants.FAIL, null, "token无效或未找到信息");
         }
-
     }
 
     // 验证token
@@ -55,7 +54,7 @@ public class TokenService {
 
     //创建令牌
     public String createToken(User user) {
-        System.out.println(secret);
+        System.out.println(System.currentTimeMillis()+expireTime);
         return JWT.create()
                         .withExpiresAt(new Date(System.currentTimeMillis()+expireTime))
                         .withClaim("id", user.getId())
@@ -69,11 +68,16 @@ public class TokenService {
     //获得token
     public String getToken(HttpServletRequest request) {
         String token = request.getHeader(header);
-        if (token != null && token.startsWith(Constants.TOKEN_PREFIX))
-        {
-            token = token.replace(Constants.TOKEN_PREFIX, "");
-        }else throw new BaseException("token", Constants.FAIL, null, "无token");
-        return token;
+//        if (token != null && token.startsWith(Constants.TOKEN_PREFIX))
+//        {
+//            token = token.replace(Constants.TOKEN_PREFIX, "");
+//        }else throw new BaseException("token", Constants.FAIL, null, "无token");
+//        return token;
+        if (token != null) {
+            return token;
+        }else {
+            throw new BaseException("token", Constants.FAIL, null, "无token");
+        }
     }
 
 

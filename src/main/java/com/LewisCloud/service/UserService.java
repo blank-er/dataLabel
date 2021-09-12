@@ -1,4 +1,4 @@
-package com.LewisCloud.service.auth;
+package com.LewisCloud.service;
 
 import com.LewisCloud.common.core.domain.model.RegisterUser;
 import com.LewisCloud.pojo.User;

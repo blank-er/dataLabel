@@ -75,7 +75,7 @@ public class Constants {
     /**
      * 用户名称
      */
-    public static final String JWT_USERNAME = "sub";
+    public static final String JWT_USERNAME = "username";
 
     /**
      * 用户头像
