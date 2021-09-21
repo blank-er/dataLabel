@@ -1,5 +1,6 @@
 package com.LewisCloud.controller;
 
+import com.LewisCloud.common.UserThreadLocal;
 import com.LewisCloud.common.core.domain.AjaxResult;
 import com.LewisCloud.common.core.domain.model.CreateProject;
 import com.LewisCloud.pojo.Project;
@@ -8,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedList;
+import java.util.List;
 
 @RestController
 public class ProjectController {
@@ -18,7 +19,8 @@ public class ProjectController {
 
     @GetMapping("/project")
     public AjaxResult getAllProject() {
-        LinkedList<Project> projects = (LinkedList<Project>) projectService.getAllProject();
+        List<Project> projects = projectService.getAllProject();
+        System.out.println(UserThreadLocal.get());
         return AjaxResult.success("获取所有项目成功", projects);
     }
 
@@ -38,5 +40,4 @@ public class ProjectController {
         projectService.createProject(createProject);
         return AjaxResult.success("创建项目成功");
     }
-
 }

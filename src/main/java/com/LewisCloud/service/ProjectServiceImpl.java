@@ -4,23 +4,17 @@ import com.LewisCloud.common.constant.ProjectStateConstants;
 import com.LewisCloud.common.core.domain.model.CreateProject;
 import com.LewisCloud.common.exception.BaseException;
 import com.LewisCloud.common.utils.ServletUtils;
-import com.LewisCloud.controller.ProjectController;
 import com.LewisCloud.mapper.ProjectMapper;
 import com.LewisCloud.pojo.Project;
-import com.LewisCloud.pojo.User;
 import com.LewisCloud.service.auth.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.LinkedList;
 import java.util.List;
 
 @Service("projectService")
@@ -42,9 +36,9 @@ public class ProjectServiceImpl implements ProjectService{
 
     @Override
     public List<Project> getAllProject() {
-        LinkedList<Project> projects = null;
+        List<Project> projects = null;
         try{
-            projects = (LinkedList<Project>) projectMapper.getAllProject();
+            projects = projectMapper.getAllProject();
         }catch (Exception e) {
             throw new BaseException(e.getMessage());
         }

@@ -17,13 +17,13 @@
         where username=#{username} and password=#{password}
     </select>
 
-    <select id="getUserByName" resultType="com.LewisCloud.pojo.User">
+    <select id="getUserByName" resultMap="userMap">
         select *
         from user
         where username=#{username};
     </select>
 
-    <select id="getUserById" resultType="com.LewisCloud.pojo.User">
+    <select id="getUserById" resultMap="userMap">
         select *
         from user
         where id=#{id};

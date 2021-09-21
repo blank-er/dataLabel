@@ -8,48 +8,44 @@
         <result property="workerMaxNum" column="worker_max_num" javaType="int"/>
         <result property="photosPath" column="photos_path" javaType="string"/>
         <result property="cocoPath" column="coco_path" javaType="string"/>
-        
-        <association property="manager" column="manager_id" javaType="com.LewisCloud.pojo.User" select="getManager">
-            <id property="id" column="manager_id"/>
-            <result property="emailAddress" column="email_address"/>
-            <result property="phoneNumber" column="phone_number"/>
-        </association>
 
-        <collection property="worker" column="worker_id" ofType="com.LewisCloud.pojo.User" select="getWorker">
-            <id property="id" column="worker_id"/>
-            <result property="emailAddress" column="email_address"/>
-            <result property="phoneNumber" column="phone_number"/>
-        </collection>
+        <association property="manager" column="manager_id" javaType="com.LewisCloud.pojo.User" select="getManager"/>
+
+        <collection property="worker" column="worker_id" ofType="com.LewisCloud.pojo.User" select="getWorker"/>
     </resultMap>
 
-
     <select id="getManager" resultType="com.LewisCloud.pojo.User">
-        select *
+        select
+        user.id as id,
+        user.username as username,
+        user.identity as identity,
+        user.email_address as emailAddress,
+        user.phone_number as phoneNumber
         from user
         where id = #{manager_id}
     </select>
 
     <select id="getWorker" resultType="com.LewisCloud.pojo.User">
-        select *
+        select
+        user.id as id,
+        user.username as username,
+        user.identity as identity,
+        user.email_address as emailAddress,
+        user.phone_number as phoneNumber
         from user
         where id = #{worker_id}
     </select>
 
+<!--    select-->
     <select id="getAllProject" resultMap="projectMap">
         select id, state, introduction, worker_max_num
         from project
     </select>
 
-<!--    <select id="getProjectById" resultType="projectMap">-->
-<!--        select id, manager, -->
-<!--        from (project p join worker_project w on p.id = w.project_id) join user u on p.manager_id = u.id-->
-<!--        where p.id = #{id}-->
-<!--    </select>-->
-
     <select id="getProjectById" resultMap="projectMap">
         select *
-        from project join worker_project on project.id = worker_project.project_id
-        where id = #{project_id}
+        from project left join worker_project on project.id = worker_project.project_id
+        where id = #{id}
     </select>
 
 <!--    insert-->
