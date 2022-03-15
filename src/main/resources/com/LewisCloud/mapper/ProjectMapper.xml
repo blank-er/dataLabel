@@ -5,6 +5,7 @@
 <mapper namespace="com.LewisCloud.mapper.ProjectMapper">
 
     <resultMap id="projectMap" type="com.LewisCloud.pojo.Project">
+        <result property="workerNum" column="worker_num" javaType="int"/>
         <result property="workerMaxNum" column="worker_max_num" javaType="int"/>
         <result property="photosPath" column="photos_path" javaType="string"/>
         <result property="cocoPath" column="coco_path" javaType="string"/>
@@ -13,6 +14,8 @@
 
         <collection property="worker" column="worker_id" ofType="com.LewisCloud.pojo.User" select="getWorker"/>
     </resultMap>
+
+    <!--    select-->
 
     <select id="getManager" resultType="com.LewisCloud.pojo.User">
         select
@@ -36,9 +39,8 @@
         where id = #{worker_id}
     </select>
 
-<!--    select-->
     <select id="getAllProject" resultMap="projectMap">
-        select id, state, introduction, worker_max_num
+        select id, state, introduction, worker_num, worker_max_num
         from project
     </select>
 
@@ -48,11 +50,21 @@
         where id = #{id}
     </select>
 
+    <select id="getProjectsByManId" resultMap="projectMap">
+        select *
+        from project left join worker_project on project.id = worker_project.project_id
+        where manager_id = #{managerId}
+    </select>
+
 <!--    insert-->
     <insert id="addProject" parameterType="com.LewisCloud.pojo.Project" useGeneratedKeys="true" keyProperty="id">
         insert into project(manager_id, state, title, introduction, worker_max_num, photos_path, coco_path)
-        values (#{project.manager.id}, #{project.state}, #{project.title}, #{project.introduction},
+        value (#{project.manager.id}, #{project.state}, #{project.title}, #{project.introduction},
                #{project.workerMaxNum}, #{project.photosPath}, #{project.cocoPath})
+    </insert>
+
+    <insert id="addWorker" parameterType="com.LewisCloud.pojo.User" >
+        insert into worker_project(worker_id, project_id) value (#{workerId}, #{projectId})
     </insert>
 
 </mapper>

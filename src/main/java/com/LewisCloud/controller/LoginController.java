@@ -1,10 +1,12 @@
 package com.LewisCloud.controller;
 
+import com.LewisCloud.common.UserThreadLocal;
 import com.LewisCloud.common.constant.Constants;
 import com.LewisCloud.common.core.domain.AjaxResult;
 import com.LewisCloud.common.core.domain.model.LoginBody;
 import com.LewisCloud.common.core.domain.model.RegisterUser;
 import com.LewisCloud.common.exception.BaseException;
+import com.LewisCloud.pojo.User;
 import com.LewisCloud.service.auth.LoginService;
 import com.LewisCloud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,7 @@ public class LoginController {
         } else if (registerUser.getIdentity() == null) {
             throw new BaseException("身份信息为空");
         } else {
-            if (userService.findUserByName(registerUser.getUsername()) != null) {
+            if (userService.getUserByName(registerUser.getUsername()) != null) {
                 throw new BaseException("用户名已存在");
             }
             System.out.println(registerUser);

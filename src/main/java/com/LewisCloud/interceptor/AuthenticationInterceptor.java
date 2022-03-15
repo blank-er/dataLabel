@@ -36,8 +36,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
         // 确认用户
         try {
-            User user = tokenService.getLoginUser(request);
-            UserThreadLocal.set(user);
+            tokenService.getLoginUser(request);
         }catch (Exception e) {
             throw new BaseException("token", Constants.FAIL, null, "token验证失败");
         }

@@ -34,7 +34,7 @@ public class TokenService {
     public User getLoginUser(HttpServletRequest request) {
         String token = this.getToken(request);
         try {
-            return userService.findUserById(JWT.decode(token).getClaim("id").asInt());
+            return userService.getUserById(JWT.decode(token).getClaim("id").asInt());
         }catch (Exception e) {
             throw new BaseException("token", Constants.FAIL, null, "token无效或未找到信息");
         }
@@ -79,6 +79,4 @@ public class TokenService {
             throw new BaseException("token", Constants.FAIL, null, "无token");
         }
     }
-
-
 }

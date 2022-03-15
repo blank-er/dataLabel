@@ -7,5 +7,7 @@ import java.util.List;
 public interface ProjectMapper {
     List<Project> getAllProject();
     Project getProjectById(@Param("id")int id);
+    List<Project> getProjectsByManId(@Param("managerId")int managerId);
     void addProject(@Param("project")Project project);
+    void addWorker(@Param("projectId")int projectId, @Param("workerId")int workerId);
 }

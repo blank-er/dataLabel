@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.LewisCloud.mapper.PhotoMapper">
+
+    <resultMap id="photoMap" type="com.LewisCloud.pojo.Photo">
+        <result property="projectId" column="project_id"/>
+    </resultMap>
+
+    <select id="getPhotoById" resultMap="photoMap">
+        select * from photo where id = #{id}
+    </select>
+
+    <select id="getPhotosByProjectId" resultMap="photoMap">
+        select * from photo where project_id = #{projectId}
+    </select>
+
+    <insert id="addPhoto" parameterType="com.LewisCloud.pojo.Photo">
+        insert into photo(project_id, state, height, width, name, type, path)
+        value (#{photo.projectId}, #{photo.state}, #{photo.height}, #{photo.width},
+            #{photo.name}, #{photo.type}, #{photo.path})
+    </insert>
+
+</mapper>

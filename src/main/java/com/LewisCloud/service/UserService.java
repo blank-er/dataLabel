@@ -6,7 +6,7 @@ import com.LewisCloud.pojo.User;
 public interface UserService {
     User loginUser(String username, String password);
     void registerUser(RegisterUser registerUser);
-    User findUserById(int id);
-    User findUserByName(String username);
+    User getUserById(int id);
+    User getUserByName(String username);
 
 }
